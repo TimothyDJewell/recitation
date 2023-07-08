@@ -17,10 +17,22 @@ const Display = ({ lines }: {lines: string[]}) => (
   </div>
 );
 
+const hideWords = (text: string, wordPredicate: (value: string, index: number) => boolean): (string | never)[] => {
+  const splitText = text.split(/\b/);
+  const wordIndices = splitText.reduce<{ arr: (number | undefined)[], nextIndex: number }>((prev, curr) => /^\w+$/.test(curr)
+      ? ({ arr: [...prev.arr, prev.nextIndex], nextIndex: prev.nextIndex + 1 })
+      : ({ arr: [...prev.arr, undefined], nextIndex: prev.nextIndex }),
+    { arr: [], nextIndex: 0 }).arr;
+  return splitText.map((value, index) => wordIndices[index] === undefined || wordPredicate(value, wordIndices[index]!) ? value : '_;)_');
+}
+
 const HiddenWords = ({ text }: { text: string }) => {
   const splitText = text.split(/\b/g);
-  const wordIndices = splitText.map((s, i) => /^\w+$/.test(s) ? i : null).filter(o => o !== null) as number[];
-  const indicesToHide = wordIndices.reduce((prev, curr, index) => index % 3 === 2 ? [...prev, curr] : prev, [] as number[]);
+  const indicesToHide = splitText
+    // first, reduce to the set of indices in splitText that have words, so we are only hiding words
+    .reduce((prev, curr, index) => /^\w+$/.test(curr) ? [...prev, index] : prev, [] as number[])
+    // second, reduce that array to just the items we want to hide
+    .reduce((prev, curr, index) => index % 3 === 2 ? [...prev, curr] : prev, [] as number[]);
   const hiddenText = splitText.map((s, i) => indicesToHide.indexOf(i) !== -1 ? '_____' : s).join('');
   return <Display lines={[ hiddenText ]} />;
 };
@@ -32,6 +44,7 @@ const App = () => (
     </header>
     <Display lines={verses} />
     <HiddenWords text={verses[0]}/>
+    {hideWords(verses[0], (v, i) => i % 3 !== 2)}
   </div>
 );
 
