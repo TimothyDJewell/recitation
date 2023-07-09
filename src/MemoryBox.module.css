@@ -1,0 +1,15 @@
+.MemoryBox {
+  cursor: pointer;
+}
+
+.MemoryBox.Secret {
+  text-align: center;
+  border: 1px solid black;
+  display: inline-block;
+  min-width: 60px;
+  user-select: none;
+}
+
+.MemoryBox.Reveal {
+  border: 0;
+}

@@ -16,3 +16,16 @@
 .App-link {
   color: #61dafb;
 }
+
+.App-body-wrapper {
+  width: 100%;
+  padding: 1em 2em;
+}
+
+.AppBody p {
+  text-align: left;
+}
+
+.LargeInput {
+  width: 75%;
+}
