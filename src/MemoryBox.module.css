@@ -6,10 +6,46 @@
   text-align: center;
   border: 1px solid black;
   display: inline-block;
-  min-width: 60px;
   user-select: none;
 }
 
 .MemoryBox.Reveal {
   border: 0;
+}
+
+.MemoryBox.Secret.w1 {
+  width: .5em;
+}
+.MemoryBox.Secret.w2 {
+  width: 1em;
+}
+.MemoryBox.Secret.w3 {
+  width: 1.5em;
+}
+.MemoryBox.Secret.w4 {
+  width: 2em;
+}
+.MemoryBox.Secret.w5 {
+  width: 2.5em;
+}
+.MemoryBox.Secret.w6 {
+  width: 3em;
+}
+.MemoryBox.Secret.w7 {
+  width: 3.5em;
+}
+.MemoryBox.Secret.w8 {
+  width: 4em;
+}
+.MemoryBox.Secret.w9 {
+  width: 4.5em;
+}
+.MemoryBox.Secret.w10 {
+  width: 5em;
+}
+.MemoryBox.Secret.w11 {
+  width: 5.5em;
+}
+.MemoryBox.Secret.w12 {
+  width: 6em;
 }
