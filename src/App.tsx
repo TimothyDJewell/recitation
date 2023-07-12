@@ -23,7 +23,7 @@ const hideWords = (text: string, wordPredicate: (value: string, index: number) =
       ? ({ arr: [...prev.arr, prev.nextIndex], nextIndex: prev.nextIndex + 1 })
       : ({ arr: [...prev.arr, undefined], nextIndex: prev.nextIndex }),
     { arr: [], nextIndex: 0 }).arr;
-  return splitText.map((value, index) => wordIndices[index] === undefined || wordPredicate(value, wordIndices[index]!) ? value : <MemoryBox hiddenText={value} />);
+  return splitText.map((value, index) => wordIndices[index] === undefined || wordPredicate(value, wordIndices[index]!) ? value : <MemoryBox key={index} hiddenText={value} />);
 }
 
 const AppBody = () => {
