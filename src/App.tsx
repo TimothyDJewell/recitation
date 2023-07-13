@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './App.css';
-import MemoryBox from './MemoryBox';
+import HiddenWords from './HiddenWords';
 import TextTypingInput from './TextTypingInput';
 
 const initialInput = [
@@ -18,35 +18,12 @@ const LargeInput = ({ text, setText }: { text: string, setText: (t: string) => v
   <textarea className="LargeInput" onChange={e => setText(e.target.value)} value={text} />
 );
 
-const hideWords = (text: string, wordPredicate: (value: string, index: number) => boolean): (string | JSX.Element)[] => {
-  const splitText = text.split(/\b/);
-  const wordIndices = splitText.reduce<{ arr: (number | undefined)[], nextIndex: number }>((prev, curr) => /^\w+$/.test(curr)
-      ? ({ arr: [...prev.arr, prev.nextIndex], nextIndex: prev.nextIndex + 1 })
-      : ({ arr: [...prev.arr, undefined], nextIndex: prev.nextIndex }),
-    { arr: [], nextIndex: 0 }).arr;
-  return splitText.map((value, index) => wordIndices[index] === undefined || wordPredicate(value, wordIndices[index]!) ? value : <MemoryBox key={index} hiddenText={value} />);
-}
-
 const AppBody = () => {
   const [memorizationText, setMemorizationText] = useState(initialInput);
-  const [hideMode, setHideMode] = useState({ mod: 3, n: 2 });
-  const increaseN = () => setHideMode({...hideMode, n: (hideMode.n + 1) % hideMode.mod});
-  const increaseMod = () => setHideMode({...hideMode, mod: hideMode.mod + 1});
-  const decreaseMod = () => {
-    const mod = (hideMode.mod - 1) || 1;
-    setHideMode({ mod, n: hideMode.n % mod });
-  }
-
   return (
     <div className="AppBody">
-      <pre>{JSON.stringify(hideMode)}</pre>
       <LargeInput text={memorizationText} setText={setMemorizationText} />
-      <div>
-        <button onClick={increaseN}>Bump hidden words</button>
-        <button onClick={increaseMod}>Show more words</button>
-        <button onClick={decreaseMod}>Show fewer words</button>
-      </div>
-      <p style={{whiteSpace: 'pre'}}>{hideWords(memorizationText, (_, i) => i % hideMode.mod !== hideMode.n)}</p>
+      <HiddenWords text={memorizationText} />
       <TextTypingInput text={memorizationText}/>
     </div>
   );
