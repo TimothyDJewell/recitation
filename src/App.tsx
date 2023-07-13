@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import './App.css';
 import HiddenWords from './HiddenWords';
 import TextTypingInput from './TextTypingInput';
+import { useLocalStorage } from './Utils';
 
 const initialInput = [
   'Have this mind among yourselves, which is yours in Christ Jesus,',
@@ -19,7 +19,7 @@ const LargeInput = ({ text, setText }: { text: string, setText: (t: string) => v
 );
 
 const AppBody = () => {
-  const [memorizationText, setMemorizationText] = useState(initialInput);
+  const [memorizationText, setMemorizationText] = useLocalStorage('recitation-memorization-text', initialInput);
   return (
     <div className="AppBody">
       <LargeInput text={memorizationText} setText={setMemorizationText} />
