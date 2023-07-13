@@ -50,7 +50,12 @@ const TextTypingInput = ({ text }: { text: string }) => {
           <span className={Style.unmatchedText}>{unmatchedText}</span>
           <span className={Style.remainingText}>{remainingText}</span>
         </div>
-        <textarea value={typed} onChange={e => setTyped(e.target.value)}/>
+        <div>
+          <textarea value={typed} onChange={e => setTyped(e.target.value)}/>
+        </div>
+        <div>
+          <button onClick={() => setTyped('')}>Clear</button>
+        </div>
       </div>
     </>
   );
