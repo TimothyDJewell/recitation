@@ -24,7 +24,8 @@ const AppBody = () => {
     <div className="AppBody">
       <LargeInput text={memorizationText} setText={setMemorizationText} />
       <HiddenWords text={memorizationText} />
-      <TextTypingInput text={memorizationText}/>
+      <TextTypingInput text={memorizationText} />
+      <TextTypingInput text={memorizationText} hideRemainingText />
     </div>
   );
 };

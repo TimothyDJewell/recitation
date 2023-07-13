@@ -36,7 +36,7 @@ const findIndicesOfFirstDiff = (a: string, b: string) => {
   return [indexA, indexB];
 };
 
-const TextTypingInput = ({ text }: { text: string }) => {
+const TextTypingInput = ({ text, hideRemainingText = false }: { text: string, hideRemainingText?: boolean }) => {
   const [typed, setTyped] = useState('');
   const [indexText, indexTyped] = findIndicesOfFirstDiff(text, typed);
   const matchedText = text.substring(0, indexText);
@@ -48,7 +48,7 @@ const TextTypingInput = ({ text }: { text: string }) => {
         <div style={{whiteSpace: 'pre'}}>
           <span className={Style.matchedText}>{matchedText}</span>
           <span className={Style.unmatchedText}>{unmatchedText}</span>
-          <span className={Style.remainingText}>{remainingText}</span>
+          {!hideRemainingText && <span className={Style.remainingText}>{remainingText}</span>}
         </div>
         <div>
           <textarea value={typed} onChange={e => setTyped(e.target.value)}/>
