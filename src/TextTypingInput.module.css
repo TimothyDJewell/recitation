@@ -1,0 +1,12 @@
+.matchedText {
+  color: black;
+}
+
+.unmatchedText {
+  color: red;
+  background-color: lightpink;
+}
+
+.remainingText {
+  color: gray;
+}

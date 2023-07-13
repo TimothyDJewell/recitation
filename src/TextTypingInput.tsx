@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Style from './TextTypingInput.module.css';
 
 /**
  * Compares two strings to find the index of the first difference.
@@ -45,9 +46,9 @@ const TextTypingInput = ({ text }: { text: string }) => {
     <>
       <div>
         <div style={{whiteSpace: 'pre'}}>
-          <span style={{ color: 'black' }}>{matchedText}</span>
-          <span style={{ color: 'red' }}>{unmatchedText}</span>
-          <span style={{ color: 'gray' }}>{remainingText}</span>
+          <span className={Style.matchedText}>{matchedText}</span>
+          <span className={Style.unmatchedText}>{unmatchedText}</span>
+          <span className={Style.remainingText}>{remainingText}</span>
         </div>
         <textarea value={typed} onChange={e => setTyped(e.target.value)}/>
       </div>
