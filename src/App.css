@@ -18,10 +18,6 @@
 }
 
 .App-body-wrapper {
-  width: 100%;
+  width: calc(100% - 4em);
   padding: 1em 2em;
-}
-
-.LargeInput {
-  width: 75%;
 }
