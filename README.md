@@ -1,13 +1,6 @@
 # recitation: a tool for memorizing
 
-Deployed manually to [https://timothydjewell.github.io/recitation/](https://timothydjewell.github.io/recitation/) via the script:
-```
-npm run build
-npm install gh-pages --save-dev
-npx gh-pages -d build
-npm uninstall gh-pages --save-dev
-```
-These steps avoid loading [gh-pages](https://www.npmjs.com/package/gh-pages) for simple development, even if it means a little slower deployment.
+Deployed manually to [https://timothydjewell.github.io/recitation/](https://timothydjewell.github.io/recitation/).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -37,3 +30,8 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run deploy`
+
+Deploys the application using [gh-pages](https://www.npmjs.com/package/gh-pages).\
+The `gh-pages` package is installed and uninstalled during this script to reduce dependencies.
