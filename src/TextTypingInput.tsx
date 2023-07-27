@@ -81,7 +81,7 @@ const TextTypingInput = ({ text, hideRemainingText = false }: { text: string, hi
         </div>
         <div>
           <button onClick={clearInput}>Clear</button>
-          {!!hideRemainingText && <button onClick={showHint} disabled={maxTypedIndex > matchedText.length || maxTypedIndex == text.length}>Hint</button>}
+          {!!hideRemainingText && <button onClick={showHint} disabled={maxTypedIndex > matchedText.length || maxTypedIndex === text.length}>Hint</button>}
         </div>
       </div>
     </>
