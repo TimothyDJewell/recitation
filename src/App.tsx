@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './App.css';
+import Style from './App.module.css';
 import HiddenWords from './HiddenWords';
 import { LargeInput } from './LargeInput';
 import TextTypingInput from './TextTypingInput';
@@ -28,7 +28,7 @@ const AppBody = () => {
   const [gameModeOption, setGameModeOption] = useState<undefined | string>();
   const GameMode = gameModeOption !== undefined ? gameModeOptionMapping[gameModeOption] : undefined;
   return (
-    <div className="AppBody">
+    <div className={Style.AppBody}>
       <div>
         Text to memorize:
         <button onClick={() => setShowMemorizationInput(!showMemorizationInput)}>{showMemorizationInput ? 'Hide' : 'Show'}</button>
@@ -47,11 +47,11 @@ const AppBody = () => {
 };
 
 const App = () => (
-  <div className="App">
-    <header className="App-header">
+  <div className={Style.App}>
+    <header className={Style.AppHeader}>
       Recitation
     </header>
-    <div className="App-body-wrapper">
+    <div className={Style.AppBodyWrapper}>
       <AppBody />
     </div>
   </div>
