@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import './App.css';
 import HiddenWords from './HiddenWords';
+import { LargeInput } from './LargeInput';
 import TextTypingInput from './TextTypingInput';
 import { useLocalStorage } from './Utils';
 
@@ -14,18 +16,32 @@ const initialInput = [
   'Phillipians 2:5-11',
 ].join('\n');
 
-const LargeInput = ({ text, setText }: { text: string, setText: (t: string) => void}) => (
-  <textarea className="LargeInput" onChange={e => setText(e.target.value)} value={text} />
-);
+const gameModeOptionMapping: { [name: string]: (props: { text: string }) => JSX.Element } = {
+  'Hidden Words': ({ text }) => <HiddenWords text={text} />,
+  'Type Text': ({ text }) => <TextTypingInput text={text} />,
+  'Type Text from scratch': ({ text }) => <TextTypingInput text={text} hideRemainingText />,
+}
 
 const AppBody = () => {
   const [memorizationText, setMemorizationText] = useLocalStorage('recitation-memorization-text', initialInput);
+  const [showMemorizationInput, setShowMemorizationInput] = useState(!memorizationText.length || memorizationText === initialInput);
+  const [gameModeOption, setGameModeOption] = useState<undefined | string>();
+  const GameMode = gameModeOption !== undefined ? gameModeOptionMapping[gameModeOption] : undefined;
   return (
     <div className="AppBody">
-      <LargeInput text={memorizationText} setText={setMemorizationText} />
-      <HiddenWords text={memorizationText} />
-      <TextTypingInput text={memorizationText} />
-      <TextTypingInput text={memorizationText} hideRemainingText />
+      <div>
+        Text to memorize:
+        <button onClick={() => setShowMemorizationInput(!showMemorizationInput)}>{showMemorizationInput ? 'Hide' : 'Show'}</button>
+      </div>
+      {showMemorizationInput && <LargeInput text={memorizationText} setText={setMemorizationText} />}
+      <div>
+        Choose a memorization game:
+        <select value={gameModeOption} onChange={e => setGameModeOption(e.target.value)}>
+          <option value={undefined}></option>
+          {Object.keys(gameModeOptionMapping).map(name => <option key={name} value={name}>{name}</option>)}
+        </select>
+      </div>
+      {!!GameMode && <GameMode text={memorizationText} />}
     </div>
   );
 };

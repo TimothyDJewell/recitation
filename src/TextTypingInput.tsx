@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import Style from './TextTypingInput.module.css';
+import { LargeInput } from './LargeInput';
 
 /**
  * Compares two strings to find the index of the first difference.
@@ -76,7 +77,7 @@ const TextTypingInput = ({ text, hideRemainingText = false }: { text: string, hi
           <span className={Style.remainingText}>{remainingText}</span>
         </div>
         <div>
-          <textarea ref={inputRef} value={typed} onChange={e => onInputChange(e.target.value)}/>
+          <LargeInput text={typed} setText={onInputChange} ref={inputRef} />
         </div>
         <div>
           <button onClick={clearInput}>Clear</button>
