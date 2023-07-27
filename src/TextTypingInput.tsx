@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Style from './TextTypingInput.module.css';
 
 /**
@@ -38,23 +38,49 @@ const findIndicesOfFirstDiff = (a: string, b: string) => {
 
 const TextTypingInput = ({ text, hideRemainingText = false }: { text: string, hideRemainingText?: boolean }) => {
   const [typed, setTyped] = useState('');
+  const [maxTypedIndex, setMaxTypedIndex] = useState(0);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const [indexText, indexTyped] = findIndicesOfFirstDiff(text, typed);
   const matchedText = text.substring(0, indexText);
   const unmatchedText = typed.substring(indexTyped);
-  const remainingText = text.substring(matchedText.length);
+  const remainingText = text.substring(matchedText.length, hideRemainingText ? Math.max(maxTypedIndex, matchedText.length) : undefined);
+  const onInputChange = (s: string) => {
+    setTyped(s);
+    if (hideRemainingText) {
+      const [indexText] = findIndicesOfFirstDiff(text, s);
+      if (indexText > maxTypedIndex) {
+        setMaxTypedIndex(indexText);
+      }
+    }
+  };
+  const clearInput = () => {
+    setTyped('');
+    setMaxTypedIndex(0);
+  }
+  const showHint = () => {
+    const followingText = text.substring(matchedText.length);
+    const hintText = followingText.substring(0, followingText.length - followingText.replace(/^\s*\S+/m, '').length);
+    const hintEndIndex = matchedText.length + hintText.length;
+    if (hintEndIndex > maxTypedIndex) {
+      setMaxTypedIndex(hintEndIndex);
+    }
+    inputRef.current?.focus();
+    inputRef.current?.setSelectionRange(inputRef.current.value.length, inputRef.current.value.length);
+  };
   return (
     <>
       <div>
         <div style={{whiteSpace: 'pre'}}>
           <span className={Style.matchedText}>{matchedText}</span>
           <span className={Style.unmatchedText}>{unmatchedText}</span>
-          {!hideRemainingText && <span className={Style.remainingText}>{remainingText}</span>}
+          <span className={Style.remainingText}>{remainingText}</span>
         </div>
         <div>
-          <textarea value={typed} onChange={e => setTyped(e.target.value)}/>
+          <textarea ref={inputRef} value={typed} onChange={e => onInputChange(e.target.value)}/>
         </div>
         <div>
-          <button onClick={() => setTyped('')}>Clear</button>
+          <button onClick={clearInput}>Clear</button>
+          {!!hideRemainingText && <button onClick={showHint} disabled={maxTypedIndex > matchedText.length}>Hint</button>}
         </div>
       </div>
     </>
