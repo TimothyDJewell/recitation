@@ -1,3 +1,7 @@
+.TextViewArea {
+  white-space: pre-wrap;
+}
+
 .matchedText {
   color: black;
 }

@@ -71,7 +71,7 @@ const TextTypingInput = ({ text, hideRemainingText = false }: { text: string, hi
   return (
     <>
       <div>
-        <div style={{whiteSpace: 'pre'}}>
+        <div className={Style.TextViewArea}>
           <span className={Style.matchedText}>{matchedText}</span>
           <span className={Style.unmatchedText}>{unmatchedText}</span>
           <span className={Style.remainingText}>{remainingText}</span>

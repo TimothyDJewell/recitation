@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Style from './HiddenWords.module.css';
 import MemoryBox from './MemoryBox';
 
 const hideWords = (text: string, wordPredicate: (value: string, index: number) => boolean): (string | JSX.Element)[] => {
@@ -25,7 +26,7 @@ const HiddenWords = ({ text }: { text: string }) =>  {
         <button onClick={increaseMod}>Show more words</button>
         <button onClick={decreaseMod}>Show fewer words</button>
       </div>
-      <p style={{ textAlign: 'left', whiteSpace: 'pre' }}>{hideWords(text, (_, i) => i % hideMode.mod !== hideMode.n)}</p>
+      <p className={Style.HiddenWordsParagraph}>{hideWords(text, (_, i) => i % hideMode.mod !== hideMode.n)}</p>
     </div>
   );
 };
