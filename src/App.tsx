@@ -35,11 +35,9 @@ const AppBody = () => {
       </div>
       {showMemorizationInput && <LargeInput text={memorizationText} setText={setMemorizationText} />}
       <div>
-        Choose a memorization game:
-        <select value={gameModeOption} onChange={e => setGameModeOption(e.target.value)}>
-          <option value={undefined}></option>
-          {Object.keys(gameModeOptionMapping).map(name => <option key={name} value={name}>{name}</option>)}
-        </select>
+        {!gameModeOption && 'Choose a memorization game:'}
+        {!gameModeOption && Object.keys(gameModeOptionMapping).map(name => <button key={name} onClick={() => setGameModeOption(name)}>{name}</button>)}
+        {!!gameModeOption && <button onClick={() => setGameModeOption(undefined)}>Back</button>}
       </div>
       {!!GameMode && <GameMode text={memorizationText} />}
     </div>
